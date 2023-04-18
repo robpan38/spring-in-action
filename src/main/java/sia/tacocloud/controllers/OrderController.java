@@ -26,7 +26,7 @@ public class OrderController {
     // debug route to print all orders
     @GetMapping("/all")
     public String showAllOrders() {
-        orderRepository.findAll();
+        System.out.println(orderRepository.findAll());
         return "redirect:/";
     }
 
