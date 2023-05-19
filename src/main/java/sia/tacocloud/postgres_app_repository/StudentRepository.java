@@ -1,6 +1,8 @@
 package sia.tacocloud.postgres_app_repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -48,4 +50,12 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             nativeQuery = true
     )
     public Student getStudentByEmailNativeNamedParam(@Param("email") String email);
+
+    @Modifying
+    @Transactional
+    @Query(
+            value = "UPDATE tbl_student SET first_name = :firstName WHERE email_address = :email",
+            nativeQuery = true
+    )
+    int updateStudentNameByEmail(@Param("firstName") String firstName, @Param("email") String email);
 }
